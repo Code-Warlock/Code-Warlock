@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | System Malfunction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Space Grotesk', 'sans-serif'] },
+                    colors: {
+                        warlock: { bg: '#0B1120', green: '#39FF14', text: '#94A3B8' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-warlock-bg text-white h-screen flex flex-col items-center justify-center overflow-hidden relative">
+
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#39FF14 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+    <div class="z-10 text-center space-y-6 max-w-lg px-6">
+        <h1 class="text-9xl font-bold text-warlock-green opacity-80" style="text-shadow: 2px 2px 0px #00F0FF, -2px -2px 0px #ff00de;">
+            404
+        </h1>
+        
+        <h2 class="text-2xl font-mono text-warlock-text">
+            &lt;Error&gt; Page Not Found &lt;/Error&gt;
+        </h2>
+        
+        <p class="text-gray-400">
+            The requested spell... err, page... could not be conjured. It may have been moved to another dimension.
+        </p>
+
+        <div class="pt-8">
+            <a href="/" class="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-black transition-all duration-200 bg-warlock-green font-mono rounded-lg hover:bg-white focus:outline-none ring-offset-2 focus:ring-2">
+                <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                <span class="relative">RETURN TO BASE</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

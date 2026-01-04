@@ -1,0 +1,524 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="min-h-screen">
+    
+    <section id="about" class="relative pt-32 pb-20 overflow-hidden">
+        <div class="hidden dark:block absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-warlock-green/5 to-transparent"></div>
+        <div class="hidden dark:block absolute top-20 right-20 w-96 h-96 bg-warlock-blue/10 rounded-full blur-[100px]"></div>
+
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            
+            <div class="space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black border border-warlock-green text-warlock-green text-xs font-mono tracking-widest shadow-[0_0_10px_rgba(57,255,20,0.3)]">
+                    <i class="fa-solid fa-terminal"></i> CODE WARLOCK
+                </div>
+
+                <div>
+                    <h1 class="text-6xl font-bold text-light-primary dark:text-white mb-2 leading-tight">
+                        I'm <span class="text-light-accent dark:text-warlock-green">{{ profile.name }}</span>
+                    </h1>
+                    <h2 class="text-2xl text-light-text dark:text-warlock-text font-medium">{{ profile.title }}</h2>
+                </div>
+
+                <div class="text-lg text-gray-600 dark:text-warlock-text/80 leading-relaxed max-w-lg border-l-4 border-light-accent dark:border-warlock-green pl-4">
+                    {{ profile.bio|linebreaksbr }}
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <div class="flex items-center gap-3 text-light-text dark:text-warlock-text/80">
+                        <i class="fa-solid fa-location-dot text-light-accent dark:text-warlock-blue w-5 text-center"></i>
+                        <span>Lagos, Nigeria</span>
+                    </div>
+                    
+                    {% if profile.phone %}
+                    <div class="flex items-center gap-3 text-light-text dark:text-warlock-text/80">
+                        <i class="fa-solid fa-phone text-light-accent dark:text-warlock-blue w-5 text-center"></i>
+                        <span>{{ profile.phone }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if profile.email %}
+                    <div class="flex items-center gap-3 text-light-text dark:text-warlock-text/80">
+                        <i class="fa-solid fa-envelope text-light-accent dark:text-warlock-blue w-5 text-center"></i>
+                        <a href="mailto:{{ profile.email }}" class="hover:text-light-accent dark:hover:text-white transition-colors">{{ profile.email }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    {% if profile.cv_link %}
+                    <a href="{{ profile.cv_link }}" target="_blank" class="bg-light-primary dark:bg-warlock-card hover:bg-light-accent dark:hover:bg-warlock-green hover:text-white dark:hover:text-black text-white dark:text-warlock-text px-6 py-3 rounded-full font-bold transition-all shadow-lg flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Download CV
+                    </a>
+                    {% endif %}
+                    
+                    <div class="flex gap-4 items-center px-2">
+                        {% if profile.github_link %}
+                        <a href="{{ profile.github_link }}" class="w-10 h-10 rounded-full border border-gray-300 dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-warlock-text hover:bg-light-primary dark:hover:bg-white/10 hover:text-white transition-all"><i class="fa-brands fa-github text-xl"></i></a>
+                        {% endif %}
+                        {% if profile.linkedin_link %}
+                        <a href="{{ profile.linkedin_link }}" class="w-10 h-10 rounded-full border border-gray-300 dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-warlock-text hover:bg-light-primary dark:hover:bg-white/10 hover:text-white transition-all"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex justify-center lg:justify-end">
+                <div class="hidden dark:block absolute inset-0 bg-gradient-to-tr from-warlock-green/20 to-warlock-blue/20 rounded-full blur-3xl transform scale-90"></div>
+                {% if profile.profile_image %}
+                <div class="relative w-80 h-80 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-8 border-white dark:border-white/5 shadow-2xl dark:neon-box transition-all duration-300">
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-full h-full object-cover">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 bg-gray-50 dark:bg-warlock-bg transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-light-primary dark:text-white mb-4">Technical Arsenal</h2>
+                <div class="w-16 h-1 bg-light-accent dark:bg-warlock-green mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                {% for skill in skills %}
+                <div class="group p-6 rounded-2xl bg-white dark:bg-warlock-card/50 border border-gray-200 dark:border-white/5 hover:border-light-accent dark:hover:border-warlock-green/50 shadow-sm hover:shadow-lg dark:hover:shadow-none transition-all duration-300 flex flex-col items-center gap-4">
+                    <i class="{{ skill.icon_class }} text-4xl {% if skill.is_key_skill %}text-light-accent dark:text-warlock-green{% else %}text-gray-400 dark:text-warlock-text group-hover:text-light-primary dark:group-hover:text-white{% endif %} transition-colors"></i>
+                    <span class="text-sm font-mono text-light-text dark:text-warlock-text group-hover:text-light-primary dark:group-hover:text-warlock-green transition-colors">{{ skill.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white dark:bg-black/20 transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-16 gap-4">
+                <div>
+                    <h2 class="text-4xl font-bold text-light-primary dark:text-white mb-2">Experience</h2>
+                    <div class="w-12 h-1 bg-light-accent dark:bg-warlock-blue rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                {% for job in experiences %}
+                <div class="relative pl-8 md:pl-12 py-6 group">
+                    <div class="absolute left-0 top-0 h-full w-1 bg-gray-200 dark:bg-white/5 group-last:h-8"></div>
+                    
+                    <div class="absolute left-[-5px] top-8 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-warlock-bg bg-gray-300 dark:bg-white/20 group-hover:bg-light-accent dark:group-hover:bg-warlock-green group-hover:scale-125 transition-all duration-300 shadow-sm"></div>
+
+                    <div class="bg-gray-50 dark:bg-warlock-card/40 border border-gray-100 dark:border-white/5 p-6 rounded-2xl hover:shadow-md dark:hover:border-warlock-green/30 transition-all duration-300">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-light-primary dark:text-white group-hover:text-light-accent dark:group-hover:text-warlock-green transition-colors">
+                                    {{ job.role }}
+                                </h3>
+                                <div class="text-sm font-medium text-gray-500 dark:text-warlock-blue flex items-center gap-2">
+                                    <i class="fa-solid fa-briefcase"></i> {{ job.company }}
+                                </div>
+                            </div>
+                            
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-warlock-bg border border-gray-200 dark:border-white/10 text-xs font-mono text-gray-500 dark:text-warlock-text whitespace-nowrap">
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ job.start_date|date:"M Y" }} - 
+                                {% if job.end_date %}
+                                    {{ job.end_date|date:"M Y" }}
+                                {% else %}
+                                    <span class="text-light-accent dark:text-warlock-green font-bold">Present</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 dark:text-warlock-text/80 text-sm leading-relaxed">
+                            {{ job.description|safe|linebreaksbr }}
+                        </p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-gray-400 dark:text-warlock-text py-12">
+                    No experience records found. Add them in the Admin panel!
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 bg-gray-50 dark:bg-warlock-bg transition-colors duration-300">
+
+     <section id="education" class="py-10 bg-gray-50 dark:bg-warlock-bg transition-colors duration-300">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <div>
+                <h3 class="text-2xl font-bold text-light-primary dark:text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-light-accent dark:text-warlock-green"></i> Education
+                </h3>
+                <div class="space-y-6">
+                    {% for edu in education %}
+                    <div class="bg-white dark:bg-warlock-card/30 p-6 rounded-xl border border-gray-100 dark:border-white/5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-light-primary dark:text-white">{{ edu.degree }}</h4>
+                            <span class="text-xs font-mono bg-gray-100 dark:bg-white/10 px-2 py-1 rounded text-gray-600 dark:text-warlock-text">
+                                {{ edu.end_date|date:"Y" }}
+                            </span>
+                        </div>
+                        <p class="text-sm text-light-accent dark:text-warlock-blue mb-2">{{ edu.institution }}</p>
+                        <p class="text-sm text-gray-500 dark:text-warlock-text/70">{{ edu.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-light-primary dark:text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-light-accent dark:text-warlock-blue"></i> Awards & Certs
+                </h3>
+                <div class="space-y-4">
+                    {% for award in awards %}
+                    <div class="flex items-center gap-4 bg-white dark:bg-warlock-card/30 p-4 rounded-xl border border-gray-100 dark:border-white/5 hover:border-light-accent dark:hover:border-warlock-green/50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-light-accent/10 dark:bg-warlock-blue/10 flex items-center justify-center text-light-accent dark:text-warlock-blue text-xl">
+                            <i class="fa-solid fa-medal"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-light-primary dark:text-white text-sm">{{ award.title }}</h4>
+                            <div class="flex gap-2 text-xs text-gray-500 dark:text-warlock-text/70">
+                                <span>{{ award.issuer }}</span> • <span>{{ award.date_received|date:"Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+     </section>
+    </section>
+
+    <section id="lab" class="py-20 bg-white dark:bg-black/20 transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+                <div>
+                    <h2 class="text-4xl font-bold text-light-primary dark:text-white mb-2">The Laboratory</h2>
+                    <div class="w-12 h-1 bg-light-accent dark:bg-warlock-blue rounded-full"></div>
+                </div>
+                <span class="inline-block px-4 py-2 rounded-full bg-gray-100 dark:bg-warlock-card border border-gray-200 dark:border-white/5 text-light-text dark:text-warlock-text text-sm font-mono">
+                    {{ projects.count }} PROJECTS DEPLOYED
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {% for project in projects %}
+                <div class="group bg-white dark:bg-warlock-card/30 border border-gray-200 dark:border-white/5 rounded-3xl overflow-hidden hover:shadow-xl dark:hover:border-warlock-green/30 transition-all hover:-translate-y-2 duration-500">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/5 dark:bg-warlock-bg/40 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        {% endif %}
+                    </div>
+
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-light-primary dark:text-white mb-3 group-hover:text-light-accent dark:group-hover:text-warlock-green transition-colors">{{ project.title }}</h3>
+                        <p class="text-gray-600 dark:text-warlock-text/80 text-sm leading-relaxed mb-6 line-clamp-3">{{ project.description }}</p>
+                        
+                        <div class="flex items-center justify-between mt-auto border-t border-gray-100 dark:border-white/5 pt-6">
+                            <div class="flex -space-x-2">
+                                {% for tech in project.tech_stack.split|slice:":3" %}
+                                <div class="w-8 h-8 rounded-full bg-gray-100 dark:bg-warlock-bg border border-white dark:border-white/10 flex items-center justify-center text-xs text-light-accent dark:text-warlock-blue font-bold shadow-sm" title="{{ tech }}">
+                                    {{ tech|slice:":1" }}
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="flex gap-4">
+                                {% if project.repo_link %}
+                                <a href="{{ project.repo_link }}" target="_blank" class="text-gray-400 hover:text-light-primary dark:text-warlock-text dark:hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                                {% endif %}
+                                {% if project.demo_link %}
+                                <a href="{{ project.demo_link }}" target="_blank" class="text-light-accent dark:text-warlock-green hover:scale-110 transition-transform"><i class="fa-solid fa-arrow-up-right-from-square text-xl"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-20 text-center border-2 border-dashed border-gray-300 dark:border-white/10 rounded-3xl">
+                    <p class="text-gray-500 dark:text-warlock-text">The laboratory is currently empty.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section id="blog" class="py-20 bg-gray-50 dark:bg-warlock-bg transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-light-primary dark:text-white mb-2">Latest Insights</h2>
+                    <div class="w-12 h-1 bg-light-accent dark:bg-warlock-green rounded-full"></div>
+                </div>
+                <a href="#" class="hidden md:flex items-center gap-2 text-sm font-bold text-light-accent dark:text-warlock-green hover:underline">
+                    View All Posts <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for post in posts %}
+                <article class="group bg-white dark:bg-warlock-card/40 border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:border-warlock-green/30 transition-all duration-300 flex flex-col h-full">
+                    
+                    <div class="h-48 overflow-hidden relative">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-light-accent to-light-primary dark:from-warlock-bg dark:to-warlock-card"></div>
+                        {% endif %}
+                        
+                        <div class="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-light-primary dark:text-white">
+                            {{ post.published_date|date:"M d, Y" }}
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-gray-400 dark:text-warlock-text mb-3">
+                            <i class="fa-regular fa-clock"></i> {{ post.read_time }} min read
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-light-primary dark:text-white mb-3 group-hover:text-light-accent dark:group-hover:text-warlock-green transition-colors">
+                            {{ post.title }}
+                        </h3>
+                        
+                        <p class="text-sm text-gray-600 dark:text-warlock-text/80 line-clamp-3 mb-6 flex-grow">
+                            {{ post.excerpt }}
+                        </p>
+                        
+                        <a href="#" class="inline-flex items-center gap-2 text-sm font-bold text-light-accent dark:text-warlock-blue hover:gap-3 transition-all">
+                            Read Article <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="col-span-full py-16 text-center border-2 border-dashed border-gray-300 dark:border-white/10 rounded-3xl">
+                    <p class="text-gray-500 dark:text-warlock-text">No articles published yet. Check back soon!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-warlock-bg transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            
+            {% if messages %}
+            <div class="max-w-4xl mx-auto mb-8">
+                {% for message in messages %}
+                <div class="p-4 rounded-xl bg-green-100 dark:bg-warlock-green/20 border border-green-200 dark:border-warlock-green text-green-800 dark:text-warlock-green text-center font-bold">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="max-w-6xl mx-auto bg-white dark:bg-warlock-card/30 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-white/5">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    
+                    <div class="p-10 bg-light-primary dark:bg-warlock-card relative overflow-hidden text-white flex flex-col justify-between">
+                        <div class="absolute top-[-50%] left-[-50%] w-full h-full bg-light-accent/30 dark:bg-warlock-green/20 rounded-full blur-3xl"></div>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-bold mb-4">Let's Create Magic</h2>
+                            <p class="text-white/70 mb-8">
+                                Have a project in mind? Looking for a full-stack engineer who understands design? Let's talk.
+                            </p>
+
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-light-accent dark:text-warlock-green">
+                                        <i class="fa-solid fa-envelope text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-white/50 uppercase font-bold">Email</div>
+                                        <div class="text-sm font-mono">{{ profile.email }}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-light-accent dark:text-warlock-blue">
+                                        <i class="fa-brands fa-linkedin text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-white/50 uppercase font-bold">LinkedIn</div>
+                                        <a href="{{ profile.linkedin_link }}" target="_blank" class="text-sm font-mono hover:text-warlock-green transition-colors">Connect with me</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 mt-12">
+                            <img src="{% static 'img/logo.jpeg' %}" alt="Logo" class="w-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        </div>
+                    </div>
+
+                    <div class="p-10">
+                        <form method="POST" action="." class="space-y-6">
+                            {% csrf_token %} <div>
+                                <label class="block text-sm font-bold text-light-text dark:text-warlock-text mb-2">Name</label>
+                                <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-warlock-bg border border-gray-200 dark:border-white/10 text-light-primary dark:text-white focus:outline-none focus:border-light-accent dark:focus:border-warlock-green transition-colors">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-light-text dark:text-warlock-text mb-2">Email</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-warlock-bg border border-gray-200 dark:border-white/10 text-light-primary dark:text-white focus:outline-none focus:border-light-accent dark:focus:border-warlock-green transition-colors">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-light-text dark:text-warlock-text mb-2">Subject</label>
+                                <input type="text" name="subject" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-warlock-bg border border-gray-200 dark:border-white/10 text-light-primary dark:text-white focus:outline-none focus:border-light-accent dark:focus:border-warlock-green transition-colors">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-light-text dark:text-warlock-text mb-2">Message</label>
+                                <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-warlock-bg border border-gray-200 dark:border-white/10 text-light-primary dark:text-white focus:outline-none focus:border-light-accent dark:focus:border-warlock-green transition-colors"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-light-primary dark:bg-warlock-green hover:bg-light-accent dark:hover:bg-warlock-blue text-white dark:text-black font-bold py-4 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                SEND MESSAGE
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="terminal" class="py-20 bg-gray-900 text-white border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold font-mono text-warlock-green flex items-center gap-3">
+                        <i class="fa-solid fa-terminal"></i> DEVELOPER API ACCESS
+                    </h2>
+                    <p class="text-gray-400 mt-2 text-sm">
+                        Interact directly with the FastAPI microservice running on Port 8001.
+                    </p>
+                </div>
+                
+                <div class="flex items-center gap-2 px-4 py-2 bg-black/50 rounded-full border border-white/10">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-warlock-green opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-warlock-green"></span>
+                    </span>
+                    <span class="text-xs font-mono text-warlock-green">SYSTEM ONLINE</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="space-y-4">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Available Endpoints</p>
+                    
+                    <button onclick="fetchApi('/api/profile')" class="w-full text-left group flex items-center justify-between p-4 rounded-lg bg-gray-800 border border-gray-700 hover:border-warlock-green hover:bg-gray-700 transition-all">
+                        <span class="font-mono text-warlock-blue">GET <span class="text-white">/api/profile</span></span>
+                        <i class="fa-solid fa-play text-gray-500 group-hover:text-warlock-green"></i>
+                    </button>
+
+                    <button onclick="fetchApi('/api/tech-stack')" class="w-full text-left group flex items-center justify-between p-4 rounded-lg bg-gray-800 border border-gray-700 hover:border-warlock-green hover:bg-gray-700 transition-all">
+                        <span class="font-mono text-warlock-blue">GET <span class="text-white">/api/tech-stack</span></span>
+                        <i class="fa-solid fa-play text-gray-500 group-hover:text-warlock-green"></i>
+                    </button>
+
+                    <button onclick="fetchApi('/api/resume')" class="w-full text-left group flex items-center justify-between p-4 rounded-lg bg-gray-800 border border-gray-700 hover:border-warlock-green hover:bg-gray-700 transition-all">
+                        <span class="font-mono text-warlock-blue">GET <span class="text-white">/api/resume</span></span>
+                        <i class="fa-solid fa-play text-gray-500 group-hover:text-warlock-green"></i>
+                    </button>
+
+                    <div class="pt-4">
+                        <a href="http://127.0.0.1:8001/docs" target="_blank" class="text-xs font-mono text-gray-500 hover:text-white underline decoration-dotted">
+                            View Swagger Documentation ->
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="h-full min-h-[300px] bg-black rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col font-mono text-sm relative">
+                        <div class="bg-gray-800 px-4 py-2 flex items-center gap-2 border-b border-gray-700">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="ml-2 text-xs text-gray-400">bash -- user@code-warlock: ~</span>
+                        </div>
+                        
+                        <div class="p-6 text-gray-300 flex-grow overflow-auto font-mono" id="terminal-output">
+                            <div class="mb-2">
+                                <span class="text-warlock-green">➜</span> <span class="text-blue-400">~</span> Initializing connection to FastAPI...
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-warlock-green">➜</span> <span class="text-blue-400">~</span> Status: <span class="text-green-400">Connected to Port 8001</span>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-warlock-green">➜</span> <span class="text-blue-400">~</span> Waiting for command...
+                                <span class="animate-pulse">_</span>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute bottom-4 right-4 text-xs text-white/5 font-bold text-6xl select-none pointer-events-none">
+                            JSON
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function fetchApi(endpoint) {
+            const output = document.getElementById('terminal-output');
+            const baseUrl = 'http://127.0.0.1:8001'; // Pointing to FastAPI Port
+            
+            // 1. Add Command Line to Screen
+            const cmdLine = document.createElement('div');
+            cmdLine.className = "mb-2 text-white";
+            cmdLine.innerHTML = `<span class="text-warlock-green">➜</span> <span class="text-blue-400">~</span> curl ${baseUrl}${endpoint}`;
+            output.appendChild(cmdLine);
+            
+            // 2. Add "Loading" State
+            const loadingLine = document.createElement('div');
+            loadingLine.className = "mb-2 text-gray-500 italic";
+            loadingLine.innerText = "Fetching data...";
+            output.appendChild(loadingLine);
+            
+            // Scroll to bottom
+            output.scrollTop = output.scrollHeight;
+
+            try {
+                // 3. Fetch from FastAPI
+                const response = await fetch(`${baseUrl}${endpoint}`);
+                const data = await response.json();
+                
+                // Remove loading line
+                output.removeChild(loadingLine);
+
+                // 4. Display JSON Result
+                const resultLine = document.createElement('pre');
+                resultLine.className = "mb-4 text-green-300 overflow-x-auto p-2 bg-white/5 rounded";
+                // Pretty print JSON
+                resultLine.innerText = JSON.stringify(data, null, 2); 
+                output.appendChild(resultLine);
+
+            } catch (error) {
+                // Handle Error (e.g., if FastAPI isn't running)
+                output.removeChild(loadingLine);
+                const errorLine = document.createElement('div');
+                errorLine.className = "mb-4 text-red-500";
+                errorLine.innerText = `Error: Could not connect to API. Is Port 8001 running? \nDetails: ${error.message}`;
+                output.appendChild(errorLine);
+            }
+            
+            // Add new prompt
+            const prompt = document.createElement('div');
+            prompt.innerHTML = `<span class="text-warlock-green">➜</span> <span class="text-blue-400">~</span> <span class="animate-pulse">_</span>`;
+            output.appendChild(prompt);
+            
+            // Scroll to bottom
+            output.scrollTop = output.scrollHeight;
+        }
+    </script>
+</main>
+{% endblock %}

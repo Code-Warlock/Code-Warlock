@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        body {
+            font-family: Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 14px;
+            font-weight: normal;
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #ddd;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 2px;
+            color: #2c3e50;
+        }
+        .job {
+            margin-bottom: 10px;
+        }
+        .job-header {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .job-details {
+            font-style: italic;
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        .description {
+            margin-top: 2px;
+            text-align: justify;
+        }
+        .skills-table {
+            width: 100%;
+            margin-top: 5px;
+        }
+        .skill-tag {
+            background-color: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>{{ profile.name }}</h1>
+        <h2>{{ profile.title }}</h2>
+        <div class="contact-info">
+            {{ profile.email }} | {{ profile.phone }} | Lagos, Nigeria
+            <br>
+            LinkedIn: {{ profile.linkedin_link }} | GitHub: {{ profile.github_link }}
+        </div>
+    </div>
+
+    <div style="margin-bottom: 15px; text-align: justify;">
+        {{ profile.bio }}
+    </div>
+
+    <div class="section-title">Professional Experience</div>
+    {% for job in experiences %}
+    <div class="job">
+        <div class="job-header">{{ job.role }}</div>
+        <div class="job-details">
+            {{ job.company }} | {{ job.start_date|date:"M Y" }} - 
+            {% if job.end_date %}{{ job.end_date|date:"M Y" }}{% else %}Present{% endif %}
+        </div>
+        <div class="description">
+            {{ job.description|linebreaksbr }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="section-title">Technical Skills</div>
+    <div>
+        {% for skill in skills %}
+        <span class="skill-tag">{{ skill.name }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="section-title">Education</div>
+    {% for edu in education %}
+    <div class="job">
+        <div class="job-header">{{ edu.degree }}</div>
+        <div class="job-details">{{ edu.institution }} | {{ edu.end_date|date:"Y" }}</div>
+    </div>
+    {% endfor %}
+
+    {% if awards %}
+    <div class="section-title">Certifications & Awards</div>
+    {% for award in awards %}
+    <div style="font-size: 11px; margin-bottom: 3px;">
+        <strong>{{ award.title }}</strong> - {{ award.issuer }} ({{ award.date_received|date:"Y" }})
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>

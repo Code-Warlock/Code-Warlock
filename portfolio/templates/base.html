@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ profile.nae|default:"Code Warlock" }} | Sofware Engineer | Product Designer</title>
+    <meta name="description" content="{{ profile.bio|truncatewords:25 }}">
+    <meta name="author" content="{{ profile.name }}">
+    <meta name="keywords" content="Software Engineer, Django, FastAPI, React, Portfolio, Code Warlock">
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.jpeg' %}"/>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ profile.name }} - {{ profile.title }}">
+    <meta property="og:description" content="{{ profile.bio|truncatewords:25 }}">
+    <meta property="og:url" content="https://your-domain.com"> {% if profile.profile_image %}
+    <meta property="og:image" content="{{ profile.profile_image.url }}">
+    {% else %}
+    <meta property="og:image" content="{% static 'img/logo.jpeg' %}">
+    {% endif %}
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ profile.name }} | Portfolio">
+    <meta name="twitter:description" content="{{ profile.bio|truncatewords:25 }}">
+    {% if profile.profile_image %}
+    <meta name="twitter:image" content="{{ profile.profile_image.url }}">
+    {% endif %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Space Grotesk', 'sans-serif'] },
+                    colors: {
+                        warlock: {
+                            bg: '#0B1120',       
+                            card: '#162032',     
+                            green: '#39FF14',    
+                            blue: '#00F0FF',     
+                            text: '#94A3B8',     
+                        },
+                        light: {
+                            bg: '#F8FAFC',       
+                            card: '#FFFFFF',     
+                            primary: '#0F172A',  
+                            accent: '#2563EB',   
+                            text: '#475569',     
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #1e293b; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #39FF14; }
+        
+        .dark .neon-text { text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        
+        #loader { transition: opacity 0.5s ease-out, visibility 0.5s; }
+        body.loading { overflow: hidden; }
+
+        #mobile-menu { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-light-bg text-light-text dark:bg-warlock-bg dark:text-warlock-text antialiased loading transition-colors duration-300">
+
+    <div id="loader" class="fixed inset-0 z-[100] bg-light-bg dark:bg-warlock-bg flex items-center justify-center transition-colors duration-300">
+        <div class="relative w-32 h-32 flex items-center justify-center">
+            <div class="absolute inset-0 border-4 border-light-accent/20 dark:border-warlock-card border-t-light-accent dark:border-t-warlock-green border-r-light-accent/50 dark:border-r-warlock-blue rounded-full animate-spin"></div>
+            <img src="{% static 'img/logo.jpeg' %}" alt="Code Warlock" class="w-20 h-20 object-contain rounded-full">
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 bg-light-bg/80 dark:bg-warlock-bg/80 backdrop-blur-md border-b border-gray-200 dark:border-white/5 transition-colors duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="relative w-10 h-10 overflow-hidden rounded-full border border-gray-300 dark:border-warlock-green/30 group-hover:border-light-accent dark:group-hover:border-warlock-green transition-all">
+                        <img src="{% static 'img/logo.jpeg' %}" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xl font-bold text-light-primary dark:text-white tracking-wide group-hover:text-light-accent dark:group-hover:text-warlock-green transition-colors">Code Warlock</span>
+                </a>
+                
+                <div class="flex items-center gap-6">
+                    
+                    <div class="hidden md:flex gap-6 text-sm font-medium text-light-text dark:text-warlock-text">
+                        <a href="#about" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">About</a>
+                        <a href="#skills" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Skills</a>
+                        <a href="#experience" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Experience</a>
+                        <a href="#education" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Education</a>
+                        <a href="#lab" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Projects</a>
+                        <a href="#blog" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Blog</a>
+                        <a href="#contact" class="hover:text-light-accent dark:hover:text-warlock-green transition-colors">Contact</a>
+                    </div>
+
+                    <button id="theme-toggle" class="w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 flex items-center justify-center text-light-primary dark:text-warlock-green hover:bg-gray-300 dark:hover:bg-white/20 transition-all focus:outline-none">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <button id="mobile-menu-btn" class="md:hidden text-2xl text-light-primary dark:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="max-h-0 opacity-0 overflow-hidden md:hidden flex flex-col gap-4 mt-4 text-center text-sm font-medium text-light-text dark:text-warlock-text border-t border-gray-100 dark:border-white/5 pt-4">
+                <a href="#about" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">About</a>
+                <a href="#skills" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Skills</a>
+                <a href="#experience" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Experience</a>
+                <a href="#education" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Education</a>
+                <a href="#lab" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Projects</a>
+                <a href="#blog" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Blog</a>
+                <a href="#contact" class="py-2 hover:text-light-accent dark:hover:text-warlock-green transition-colors mobile-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="bg-gray-100 dark:bg-warlock-bg border-t border-gray-200 dark:border-white/5 py-8 text-center text-sm mt-20 transition-colors duration-300">
+        <p class="text-light-text dark:text-warlock-text">&copy; <span id="year"></span> {{ profile.nam|default:"Code Warlock" }}. Built with Django & FastAPI.</p>
+    </footer>
+
+    <script>
+        // 1. Year Update
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // 2. Loader Logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.visibility = 'hidden';
+                document.body.classList.remove('loading');
+            }, 500);
+        });
+
+        // 3. Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+
+        // 4. Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('max-h-0')) {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-96', 'opacity-100');
+            } else {
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileMenu.classList.remove('max-h-96', 'opacity-100');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileMenu.classList.remove('max-h-96', 'opacity-100');
+            });
+        });
+    </script>
+</body>
+</html>
