@@ -1,4 +1,4 @@
-# ⚡ Code Warlock Portfolio
+# Code Warlock Portfolio
 > A Hybrid Django + FastAPI Architecture
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat&logo=python&logoColor=white)
@@ -8,7 +8,7 @@
 
 **Code Warlock** is a next-generation personal portfolio built to demonstrate full-stack mastery. Unlike standard static sites, this project runs a dual-server architecture: a robust **Django** core for the CMS and frontend, paired with a high-performance **FastAPI** microservice for live data fetching.
 
-## 🚀 Key Features
+## Key Features
 
 ### 1. Hybrid Backend Core
 * **Django (Port 8000):** Handles the Admin Panel, SQL Database, HTML rendering, and static assets.
