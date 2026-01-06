@@ -4,5 +4,3 @@ set -o errexit
 pip install -r requirements.txt
 python manage.py collectstatic --no-input --ignore *.html --ignore cloudinary*
 python manage.py migrate
-
-python create_superuser.py
