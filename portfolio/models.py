@@ -64,6 +64,8 @@ class Experience(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField()
+    class Meta:
+        ordering = ['-end_date']
     def __str__(self): return f"{self.role} at {self.company}"
 
 class ContactMessage(models.Model):
