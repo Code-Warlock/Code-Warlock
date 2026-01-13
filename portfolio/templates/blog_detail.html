@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+{% load static %}
 {% block title %}{{ post.title }} | Code Warlock Blog{% endblock %}
 
 {% block description %}{{ post.excerpt|striptags|truncatechars:155 }}{% endblock %}
