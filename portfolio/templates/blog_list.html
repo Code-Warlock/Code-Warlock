@@ -1,4 +1,9 @@
 {% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}The Grimoire | Code Warlock Technical Blog{% endblock %}
+
+{% block description %}Read thoughts, stories, and technical spells from Code Warlock. A collection of articles on Django, React, and Software Architecture.{% endblock %}
 {% block content %}
 <div class="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
@@ -29,7 +34,7 @@
                 <div class="p-6">
                     <div class="flex justify-between items-center text-xs text-blue-500 dark:text-warlock-green mb-3 font-mono uppercase tracking-widest">
                         <span>{{ post.published_date|date:"M d, Y" }}</span>
-                        <span>{{ post.read_time }} min read</span>
+                        <span>{{ post.read_time }} mins read</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-warlock-blue transition-colors">
                         {{ post.title }}

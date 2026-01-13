@@ -1,5 +1,7 @@
 from django.db import models
 
+from ckeditor.fields import RichTextField
+
 
 class Profile(models.Model):
     name = models.CharField(max_length=100)
@@ -81,7 +83,7 @@ class BlogPost(models.Model):
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='blog/', blank=True, null=True)
     excerpt = models.TextField()
-    content = models.TextField()
+    content = RichTextField(blank=True, null=True)
     published_date = models.DateField(auto_now_add=True)
     read_time = models.IntegerField(default=5)
     def __str__(self): return self.title

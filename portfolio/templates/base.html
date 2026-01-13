@@ -5,36 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>{{ profile.name|default:"Code Warlock" }} | Software Engineer | Product Designer</title>
-    <meta name="description" content="{{ profile.bio|truncatewords:25 }}">
+    <title>{% block title %}{{ profile.name|default:"Code Warlock" }} | Software Engineer{% endblock %}</title>
+    
+    <meta name="description" content="{% block description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
     <meta name="author" content="{{ profile.name }}">
-    <meta name="keywords" content="Software Engineer, Django, FastAPI, React, Portfolio, Code Warlock, Python Developer Nigeria">
+    
+    <meta name="keywords" content="{% block keywords %}Software Engineer, Django, FastAPI, React, Portfolio, Code Warlock, Figma, Product Designer{% endblock %}">
 
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://codewarlock.com{{ request.path }}">
-    
     <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.jpeg' %}"/>
 
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:site_name" content="Code Warlock Portfolio">
-    <meta property="og:title" content="{{ profile.name }} - Fullstack Engineer">
-    <meta property="og:description" content="{{ profile.bio|truncatewords:25 }}">
+    
+    <meta property="og:title" content="{% block og_title %}{{ profile.name }} - Fullstack Engineer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
     <meta property="og:url" content="https://codewarlock.com{{ request.path }}">
     
-    {% if profile.profile_image %}
-    <meta property="og:image" content="{{ profile.profile_image.url }}">
-    <meta property="og:image:alt" content="{{ profile.name }} Profile Picture">
-    {% else %}
-    <meta property="og:image" content="{% static 'img/logo.jpeg' %}">
-    {% endif %}
+    <meta property="og:image" content="{% block og_image %}{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
+    <meta property="og:image:alt" content="{% block og_alt %}{{ profile.name }} Profile Picture{% endblock %}">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ profile.name }} | Software Engineer">
-    <meta name="twitter:description" content="{{ profile.bio|truncatewords:25 }}">
-    {% if profile.profile_image %}
-    <meta name="twitter:image" content="{{ profile.profile_image.url }}">
-    {% endif %}
+    <meta name="twitter:title" content="{% block twitter_title %}{{ profile.name }} | Software Engineer{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
 
+    {% block schema %}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -54,6 +51,7 @@
       ]
     }
     </script>
+    {% endblock %}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
