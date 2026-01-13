@@ -5,28 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>{{ profile.nae|default:"Code Warlock" }} | Sofware Engineer | Product Designer</title>
+    <title>{{ profile.name|default:"Code Warlock" }} | Software Engineer | Product Designer</title>
     <meta name="description" content="{{ profile.bio|truncatewords:25 }}">
     <meta name="author" content="{{ profile.name }}">
-    <meta name="keywords" content="Software Engineer, Django, FastAPI, React, Portfolio, Code Warlock">
+    <meta name="keywords" content="Software Engineer, Django, FastAPI, React, Portfolio, Code Warlock, Python Developer Nigeria">
 
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://codewarlock.com{{ request.path }}">
+    
     <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.jpeg' %}"/>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ profile.name }} - {{ profile.title }}">
+    <meta property="og:site_name" content="Code Warlock Portfolio">
+    <meta property="og:title" content="{{ profile.name }} - Fullstack Engineer">
     <meta property="og:description" content="{{ profile.bio|truncatewords:25 }}">
-    <meta property="og:url" content="https://your-domain.com"> {% if profile.profile_image %}
+    <meta property="og:url" content="https://codewarlock.com{{ request.path }}">
+    
+    {% if profile.profile_image %}
     <meta property="og:image" content="{{ profile.profile_image.url }}">
+    <meta property="og:image:alt" content="{{ profile.name }} Profile Picture">
     {% else %}
     <meta property="og:image" content="{% static 'img/logo.jpeg' %}">
     {% endif %}
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ profile.name }} | Portfolio">
+    <meta name="twitter:title" content="{{ profile.name }} | Software Engineer">
     <meta name="twitter:description" content="{{ profile.bio|truncatewords:25 }}">
     {% if profile.profile_image %}
     <meta name="twitter:image" content="{{ profile.profile_image.url }}">
     {% endif %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ profile.name|default:'Code Warlock' }}",
+      "url": "https://codewarlock.com",
+      "image": "{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://codewarlock.com{% static 'img/logo.jpeg' %}{% endif %}",
+      "jobTitle": "Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "LIOZIO Companies"
+      },
+      "sameAs": [
+        "https://github.com/Code-Warlock",
+        "https://www.linkedin.com/in/desmond-ucha-69baa0200",
+        "https://twitter.com/Code_Warlock" 
+      ]
+    }
+    </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
