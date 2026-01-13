@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.views.generic import ListView, DetailView
 
 def home(request):
     if request.method == 'POST':
@@ -75,3 +76,26 @@ def resume(request):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+class BlogListView(ListView):
+    model = BlogPost
+    template_name = 'blog_list.html'
+    context_object_name = 'posts'
+    ordering = ['-published_date']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # We need this so the Navbar/Footer still works
+        context['profile'] = Profile.objects.first()
+        return context
+
+class BlogDetailView(DetailView):
+    model = BlogPost
+    template_name = 'blog_detail.html'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # We need this so the Navbar/Footer still works
+        context['profile'] = Profile.objects.first()
+        return context
