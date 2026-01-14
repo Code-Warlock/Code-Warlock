@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib import messages
 from .models import Profile, Skill, Project, Experience, ContactMessage,BlogPost,  Education, Award,BlogComment
 from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
@@ -99,29 +99,28 @@ class BlogDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         
-        # --- VIEW COUNTER LOGIC ---
-        # Check if user visited this specific post in this session
+        
         session_key = f'viewed_post_{obj.id}'
         if not self.request.session.get(session_key, False):
             obj.views += 1
             obj.save()
-            self.request.session[session_key] = True # Mark as viewed
+            self.request.session[session_key] = True 
         return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.first()
         
-        # Add the Comment Form
+       
         context['form'] = CommentForm()
         
-        # Check if user liked this post (for button color)
+        
         session_key = f'liked_post_{self.object.id}'
         context['has_liked'] = self.request.session.get(session_key, False)
         
         return context
 
-    # --- HANDLE COMMENT SUBMISSION ---
+    
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = CommentForm(request.POST)
@@ -132,26 +131,25 @@ class BlogDetailView(DetailView):
             comment.save()
             return redirect('blog_detail', slug=self.object.slug)
         
-        # If form is invalid, reload page with errors
+        
         context = self.get_context_data(object=self.object)
         context['form'] = form
         return self.render_to_response(context)
 
-# --- NEW FUNCTION FOR AJAX LIKES ---
+
 @require_POST
 def like_post(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)
     session_key = f'liked_post_{post.id}'
     
     if not request.session.get(session_key, False):
-        # Like
         post.likes += 1
         post.save()
         request.session[session_key] = True
         liked = True
     else:
-        # Unlike (Toggle)
-        post.likes -= 1
+        if post.likes > 0: 
+            post.likes -= 1
         post.save()
         del request.session[session_key]
         liked = False
