@@ -86,4 +86,20 @@ class BlogPost(models.Model):
     content = RichTextField(blank=True, null=True)
     published_date = models.DateField(auto_now_add=True)
     read_time = models.IntegerField(default=5)
-    def __str__(self): return self.title
+    views = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+class BlogComment(models.Model):
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Comment by {self.name} on {self.post.title}"

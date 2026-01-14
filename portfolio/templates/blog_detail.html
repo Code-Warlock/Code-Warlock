@@ -46,6 +46,7 @@
 {% endblock %}
 {% block content %}
 <style>
+    /* Keep your existing styles */
     .rich-text-content h2 { font-size: 1.875rem; font-weight: 700; color: white; margin-top: 2rem; margin-bottom: 1rem; }
     .rich-text-content h3 { font-size: 1.5rem; font-weight: 600; color: #e2e8f0; margin-top: 1.5rem; margin-bottom: 0.75rem; }
     .rich-text-content p { margin-bottom: 1.25rem; line-height: 1.8; color: #cbd5e1; font-size: 1.125rem; }
@@ -61,15 +62,21 @@
     <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <a href="{% url 'blog_list' %}" class="inline-flex items-center text-blue-600 dark:text-warlock-green hover:underline mb-8 transition font-mono">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Grimoire
+            <i class="fas fa-arrow-left mr-2"></i> Back to Grimoire 
         </a>
 
         <header class="mb-10 text-center">
-            <div class="flex justify-center items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4 font-mono">
+            <div class="flex justify-center items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4 font-mono">
                 <span>{{ post.published_date|date:"F d, Y" }}</span>
                 <span>•</span>
                 <span>{{ post.read_time }} min read</span>
+                
+                <span class="text-gray-300">|</span>
+                <span class="flex items-center gap-2" title="Views">
+                    <i class="fa-regular fa-eye"></i> {{ post.views }}
+                </span>
             </div>
+
             <h1 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-8">
                 {{ post.title }}
             </h1>
@@ -86,28 +93,82 @@
         </div>
 
         <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
-            <h3 class="text-center text-gray-500 dark:text-gray-400 font-mono mb-6 uppercase tracking-widest text-sm">Share this spell</h3>
-            <div class="flex justify-center gap-6">
-                <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-warlock-green hover:text-black transition duration-300">
-                    <i class="fa-brands fa-x-twitter text-xl"></i>
-                </a>
-
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-blue-600 transition duration-300">
-                    <i class="fa-brands fa-linkedin-in text-xl"></i>
-                </a>
-
-                <a href="https://api.whatsapp.com/send?text={{ post.title }} {{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-green-500 transition duration-300">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                </a>
-
-                <button onclick="copyLink()" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-600 transition duration-300 group relative">
-                    <i class="fa-solid fa-link text-xl"></i>
-                    <span id="copyTooltip" class="absolute -top-10 bg-black text-white text-xs px-2 py-1 rounded opacity-0 transition">Copied!</span>
+            <h3 class="text-center text-gray-500 dark:text-gray-400 font-mono mb-6 uppercase tracking-widest text-sm">Engage with this spell</h3>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                
+                <button id="like-btn" data-slug="{{ post.slug }}" class="group flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 transition duration-300 border border-transparent hover:border-red-200 dark:hover:border-red-800/50">
+                    <i id="like-icon" class="text-2xl transition-transform group-hover:scale-110 {% if has_liked %}fa-solid text-red-500{% else %}fa-regular text-gray-400 group-hover:text-red-500{% endif %} fa-heart"></i>
+                    <span id="like-count" class="font-bold text-lg dark:text-white">{{ post.likes }}</span>
                 </button>
+
+                <div class="hidden md:block w-px h-8 bg-gray-300 dark:bg-gray-700"></div>
+
+                <div class="flex gap-4">
+                    <a href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-black transition duration-300">
+                        <i class="fa-brands fa-x-twitter text-xl"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-blue-600 transition duration-300">
+                        <i class="fa-brands fa-linkedin-in text-xl"></i>
+                    </a>
+
+                    <a href="https://api.whatsapp.com/send?text={{ post.title }} {{ request.build_absolute_uri }}" target="_blank" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-green-500 transition duration-300">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                    </a>
+
+                    <button onclick="copyLink()" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-600 transition duration-300 group relative">
+                        <i class="fa-solid fa-link text-xl"></i>
+                        <span id="copyTooltip" class="absolute -top-10 bg-black text-white text-xs px-2 py-1 rounded opacity-0 transition">Copied!</span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="mt-8 text-center">
+        <div class="mt-16 bg-white dark:bg-[#0f1623] p-6 md:p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-xl">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                <i class="fa-regular fa-comments text-blue-500 dark:text-warlock-green"></i> 
+                Comments <span class="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">{{ post.comments.count }}</span>
+            </h3>
+
+            <form method="POST" class="mb-10">
+                {% csrf_token %}
+                <div class="space-y-4">
+                    <div>
+                        {{ form.name }}
+                    </div>
+                    <div>
+                        {{ form.message }}
+                    </div>
+                    <button type="submit" class="px-6 py-3 bg-blue-600 dark:bg-warlock-green text-white dark:text-black font-bold rounded-lg hover:opacity-90 transition shadow-lg shadow-blue-500/20 dark:shadow-green-500/20">
+                        Post Comment
+                    </button>
+                </div>
+            </form>
+
+            <div class="space-y-6">
+                {% for comment in post.comments.all %}
+                <div class="border-b border-gray-100 dark:border-gray-800 pb-6 last:border-0 last:pb-0">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-xs">
+                                {{ comment.name|slice:":1" }}
+                            </div>
+                            <h4 class="font-bold text-gray-900 dark:text-white">{{ comment.name }}</h4>
+                        </div>
+                        <span class="text-xs text-gray-400 font-mono">{{ comment.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 pl-11">{{ comment.message }}</p>
+                </div>
+                {% empty %}
+                <div class="text-center py-8 text-gray-500 italic">
+                    <p>No comments yet. Be the first to leave a mark.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
             <p class="text-gray-500 italic">Written by {{ profile.name }}</p>
         </div>
 
@@ -115,6 +176,41 @@
 </div>
 
 <script>
+    const likeBtn = document.getElementById('like-btn');
+    const likeIcon = document.getElementById('like-icon');
+    const likeCount = document.getElementById('like-count');
+
+    // Only add listener if button exists
+    if (likeBtn) {
+        likeBtn.addEventListener('click', function() {
+            const slug = this.getAttribute('data-slug');
+            
+            // Add simple animation
+            likeIcon.classList.add('scale-125');
+            setTimeout(() => likeIcon.classList.remove('scale-125'), 200);
+
+            fetch(`/blog/like/${slug}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                likeCount.textContent = data.count;
+                if (data.liked) {
+                    likeIcon.classList.remove('fa-regular', 'text-gray-400');
+                    likeIcon.classList.add('fa-solid', 'text-red-500');
+                } else {
+                    likeIcon.classList.remove('fa-solid', 'text-red-500');
+                    likeIcon.classList.add('fa-regular', 'text-gray-400');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    }
+    
     function copyLink() {
         navigator.clipboard.writeText(window.location.href);
         const tooltip = document.getElementById('copyTooltip');

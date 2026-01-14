@@ -6,4 +6,5 @@ urlpatterns = [
     path('resume/', views.resume, name='resume'),
     path('blog/', views.BlogListView.as_view(), name='blog_list'),
     path('blog/<slug:slug>/', views.BlogDetailView.as_view(), name='blog_detail'),
+    path('blog/like/<slug:slug>/', views.like_post, name='like_post'),
 ]
