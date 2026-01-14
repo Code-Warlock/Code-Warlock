@@ -290,7 +290,7 @@
                             {{ post.excerpt }}
                         </p>
                         
-                        <a href="#" class="inline-flex items-center gap-2 text-sm font-bold text-light-accent dark:text-warlock-blue hover:gap-3 transition-all">
+                        <a href="{% url 'blog_detail' post.slug %}" class="inline-flex items-center gap-2 text-sm font-bold text-light-accent dark:text-warlock-blue hover:gap-3 transition-all">
                             Read Article <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
