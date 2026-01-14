@@ -54,10 +54,20 @@
     .rich-text-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #cbd5e1; }
     .rich-text-content blockquote { border-left: 4px solid #39FF14; padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: #94a3b8; }
     .rich-text-content img { border-radius: 0.75rem; margin: 2rem auto; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); max-width: 100%; height: auto; }
-    .rich-text-content a { color: #39FF14; text-decoration: underline; }
-    .rich-text-content strong { color: white; font-weight: bold; }
-</style>
 
+
+    /* --- DARK MODE OVERRIDES (Light Text on Dark) --- */
+    .dark .rich-text-content h2 { color: white; }
+    .dark .rich-text-content h3 { color: #e2e8f0; }
+    .dark .rich-text-content p { color: #cbd5e1; } /* Slate-300 */
+    .dark .rich-text-content ul { color: #cbd5e1; }
+    .dark .rich-text-content ol { color: #cbd5e1; }
+    .dark .rich-text-content strong { color: white; }
+    .dark .rich-text-content blockquote { border-left-color: #39FF14; color: #94a3b8; }
+    
+    /* Links (Neon Green in dark mode) */
+    .dark .rich-text-content a { color: #39FF14; }
+</style>
 <div class="min-h-screen pt-24 pb-20">
     <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
