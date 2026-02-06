@@ -7,7 +7,12 @@ from django.urls import reverse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.management import call_command
+import io
+import datetime
 from .forms import CommentForm
+
 
 def home(request):
     if request.method == 'POST':
@@ -87,7 +92,7 @@ class BlogListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # We need this so the Navbar/Footer still works
+        
         context['profile'] = Profile.objects.first()
         return context
 
@@ -155,3 +160,29 @@ def like_post(request, slug):
         liked = False
 
     return JsonResponse({'liked': liked, 'count': post.likes})
+
+@staff_member_required
+def download_backup(request):
+    """
+    This view runs the dumpdata command internally and downloads the file.
+    No Shell required.
+    """
+    
+    output = io.StringIO()
+    
+    
+    
+    call_command(
+        'dumpdata', 
+        exclude=['auth.permission', 'contenttypes', 'sessions.session'], 
+        indent=2, 
+        stdout=output
+    )
+    
+    
+    output.seek(0)
+    response = HttpResponse(output.getvalue(), content_type='application/json')
+    filename = f"backup_{datetime.datetime.now().strftime('%Y-%m-%d')}.json"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    return response
