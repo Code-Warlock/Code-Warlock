@@ -7,5 +7,4 @@ urlpatterns = [
     path('blog/', views.BlogListView.as_view(), name='blog_list'),
     path('blog/<slug:slug>/', views.BlogDetailView.as_view(), name='blog_detail'),
     path('blog/like/<slug:slug>/', views.like_post, name='like_post'),
-    path('secret-backup/', views.download_backup, name='download_backup'),  
 ]
