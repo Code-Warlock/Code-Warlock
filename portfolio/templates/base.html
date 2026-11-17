@@ -2,35 +2,35 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
 <head>
-   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>{% block title %}{{ profile.name|default:"Code Warlock" }} | Full-Stack Systems Architect & Tech Executive{% endblock %}</title>
-    
-    <meta name="description" content="{% block description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
-    <meta name="author" content="{{ profile.name }}">
-    
-    <meta name="keywords" content="{% block keywords %}Software Engineer, Full-Stack Systems Architect, Python, Django, FastAPI, React, TypeScript, DelacoTech, Code Warlock, Product Designer, Tech Executive, Portfolio{% endblock %}">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://codewarlock.com{{ request.path }}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/logo.jpeg' %}"/>
+<title>{% block title %}{{ profile.name|default:"Code Warlock" }} | Full-Stack Systems Architect & Tech Executive{% endblock %}</title>
 
-    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:site_name" content="Code Warlock Portfolio">
-    
-    <meta property="og:title" content="{% block og_title %}{{ profile.name }} | Full-Stack Systems Architect{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
-    <meta property="og:url" content="https://codewarlock.com{{ request.path }}">
-    
-    <meta property="og:image" content="{% block og_image %}{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
-    <meta property="og:image:alt" content="{% block og_alt %}{{ profile.name }} Profile Picture{% endblock %}">
+<meta name="description" content="{% block description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
+<meta name="author" content="{{ profile.name }}">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}{{ profile.name }} | Full-Stack Systems Architect{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
-    <meta name="twitter:image:alt" content="{% block twitter_alt %}{{ profile.name }} Profile Picture{% endblock %}">{% endif %}{% endblock %}">
+<meta name="keywords" content="{% block keywords %}Software Engineer, Full-Stack Systems Architect, Python, Django, FastAPI, React, TypeScript, DelacoTech, Code Warlock, Product Designer, Tech Executive, Portfolio{% endblock %}">
+
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://codewarlock.com{{ request.path }}">
+<link rel="shortcut icon" type="image/png" href="{% static 'img/logo.jpeg' %}"/>
+
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:site_name" content="Code Warlock Portfolio">
+
+<meta property="og:title" content="{% block og_title %}{{ profile.name }} | Full-Stack Systems Architect{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
+<meta property="og:url" content="https://codewarlock.com{{ request.path }}">
+
+<meta property="og:image" content="{% block og_image %}{% if profile and profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
+<meta property="og:image:alt" content="{% block og_alt %}{{ profile.name|default:'Code Warlock' }} Profile Picture{% endblock %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}{{ profile.name }} | Full-Stack Systems Architect{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}{{ profile.bio|truncatewords:25 }}{% endblock %}">
+<meta name="twitter:image" content="{% block twitter_image %}{% if profile and profile.profile_image %}{{ profile.profile_image.url }}{% else %}{% static 'img/logo.jpeg' %}{% endif %}{% endblock %}">
+<meta name="twitter:image:alt" content="{% block twitter_alt %}{{ profile.name|default:'Code Warlock' }} Profile Picture{% endblock %}">
 
     {% block schema %}
     <script type="application/ld+json">
